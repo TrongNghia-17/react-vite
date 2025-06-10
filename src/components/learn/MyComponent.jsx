@@ -1,9 +1,11 @@
 import './style.css';
 
 const MyComponent = () => {
+    const nghiaht = "Kien";
+
     return (
         <>
-            <div> eric & hoidanit </div>
+            <div> {nghiaht} & hoidanit </div>
             <div className="child">child</div>
         </>
     );
