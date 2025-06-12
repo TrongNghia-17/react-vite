@@ -8,16 +8,13 @@ const TodoData = (props) => {
                 console.log(">>> check map: ", item, index)
                 return (
                     <div>
-                        <div className="todo-item">
+                        <div className={`todo-item`} key={item.id}>
                             {item.name}
                             <button>Delete</button>
                         </div>
                     </div>
                 )
             })}
-            <div>
-                {JSON.stringify(props.todoList)}
-            </div>
         </div>
     );
 }
