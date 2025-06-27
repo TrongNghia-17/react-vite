@@ -1,22 +1,29 @@
 import { Input, notification, Modal } from 'antd';
-import { useState } from 'react';
-import { createUserAPI } from '../../services/api.service';
+import { useEffect, useState } from 'react';
+import { createUserAPI, updateUserAPI } from '../../services/api.service';
 
-const UpdateUserModal = () => {
+const UpdateUserModal = (props) => {
+    const [id, setId] = useState("");
     const [fullName, setFullName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const [phone, setPhone] = useState("");
-    const [isModalOpen, setIsModalOpen] = useState(true);
 
+    const { isModalUpdateOpen, setIsModalUpdateOpen, dataUpdate, setDataUpdate } = props;
+
+    useEffect(() => {
+        if (dataUpdate) {
+            setId(dataUpdate._id);
+            setFullName(dataUpdate.fullName);
+            setPhone(dataUpdate.phone);
+        }
+    }, [dataUpdate])
 
     const handleSubmitBtn = async () => {
-        const res = await createUserAPI(fullName, email, password, phone);
+        const res = await updateUserAPI(id, fullName, phone);
 
         if (res.data) {
             notification.success({
-                message: "create user",
-                description: "Tạo user thành công"
+                message: "Update user",
+                description: "Cập nhật user thành công"
             })
             resetAndCloseModel();
             // await loadUser();
@@ -30,17 +37,17 @@ const UpdateUserModal = () => {
     }
 
     const resetAndCloseModel = () => {
-        setIsModalOpen(false);
+        setIsModalUpdateOpen(false);
         setFullName("");
-        setEmail("");
-        setPassword("");
         setPhone("");
+        setId("");
+        setDataUpdate(null);
     }
 
     return (
         <Modal
             title="Update a User"
-            open={isModalOpen}
+            open={isModalUpdateOpen}
             onOk={() => handleSubmitBtn()}
             onCancel={() => resetAndCloseModel()}
             maskClosable={false}
@@ -48,24 +55,17 @@ const UpdateUserModal = () => {
         >
             <div style={{ display: "flex", gap: "10px", flexDirection: "column" }}>
                 <div>
+                    <span>Id</span>
+                    <Input
+                        value={id}
+                        disabled
+                    />
+                </div>
+                <div>
                     <span>FullName</span>
                     <Input
                         value={fullName}
                         onChange={(event) => { setFullName(event.target.value) }}
-                    />
-                </div>
-                <div>
-                    <span>Email</span>
-                    <Input
-                        value={email}
-                        onChange={(event) => { setEmail(event.target.value) }}
-                    />
-                </div>
-                <div>
-                    <span>Password</span>
-                    <Input.Password
-                        value={password}
-                        onChange={(event) => { setPassword(event.target.value) }}
                     />
                 </div>
                 <div>
