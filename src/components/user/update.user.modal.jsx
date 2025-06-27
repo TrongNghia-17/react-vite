@@ -7,7 +7,8 @@ const UpdateUserModal = (props) => {
     const [fullName, setFullName] = useState("");
     const [phone, setPhone] = useState("");
 
-    const { isModalUpdateOpen, setIsModalUpdateOpen, dataUpdate, setDataUpdate } = props;
+    const { isModalUpdateOpen, setIsModalUpdateOpen,
+        dataUpdate, setDataUpdate, loadUser } = props;
 
     useEffect(() => {
         if (dataUpdate) {
@@ -26,7 +27,7 @@ const UpdateUserModal = (props) => {
                 description: "Cập nhật user thành công"
             })
             resetAndCloseModel();
-            // await loadUser();
+            await loadUser();
         }
         else {
             notification.error({
