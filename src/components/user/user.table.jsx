@@ -16,7 +16,7 @@ const UserTable = (props) => {
     const [dataDetail, setDataDetail] = useState(null);
     const [isDetailOpen, setIsDetailOpen] = useState(false);
 
-    const handleDeleteUser = async (id) => {        
+    const handleDeleteUser = async (id) => {
         const res = await deleteUserAPI(id);
         console.log(">>> handleDeleteUser", res.data)
         if (res.data) {
@@ -36,9 +36,19 @@ const UserTable = (props) => {
 
     const columns = [
         {
+            title: "STT",
+            render: (_, record, index) => {
+                return (
+                    <>
+                        {index + 1}
+                    </>
+                )
+            }
+        },
+        {
             title: 'Id',
             key: '_id',
-            render: (_, record) => {
+            render: (_, record, index) => {
                 return (
                     <a href='#'
                         onClick={() => {
