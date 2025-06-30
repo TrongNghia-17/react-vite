@@ -21,7 +21,6 @@ const UserTable = (props) => {
 
     const handleDeleteUser = async (id) => {
         const res = await deleteUserAPI(id);
-        console.log(">>> handleDeleteUser", res.data)
         if (res.data) {
             notification.success({
                 message: "Delete user",
